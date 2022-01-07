@@ -33,12 +33,9 @@
 
 #include "opp_gui/utils.h"
 #include "opp_gui/widgets/tool_path_editor_widget.h"
-#include "opp_gui/widgets/touch_point_editor_widget.h"
 #include "ui_tool_path_planner.h"
 
 const static std::string PCL_MESH_TOPIC = "pcl_mesh";
-const static int MIN_TOUCH_POINTS = 0;
-const static int MIN_VERIFICATION_POINTS = 0;
 
 namespace opp_gui
 {
@@ -62,27 +59,9 @@ ToolPathPlannerWidget::ToolPathPlannerWidget(QWidget* parent,
   }
 
   // Create the other widgets
-  touch_point_editor_ = new TouchPointEditorWidget(this, nh_, marker_frame_);
-  verification_point_editor_ = new TouchPointEditorWidget(this, nh_, marker_frame_);
   tool_path_editor_ = new ToolPathEditorWidget(this, nh_, marker_frame_);
 
-  // Set the color of the touch point markers
-  touch_point_editor_->setMarkerColor(1.0, 0.0, 0.0);
-  verification_point_editor_->setMarkerColor(0.0, 0.0, 1.0);
-
   // Add the widgets to the appropriate frames
-  {
-    // Touch point editor
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->addWidget(touch_point_editor_);
-    ui_->frame_define_touch_off_points->setLayout(layout);
-  }
-  {
-    // Verification point editor
-    QVBoxLayout* layout = new QVBoxLayout();
-    layout->addWidget(verification_point_editor_);
-    ui_->frame_define_verification_points->setLayout(layout);
-  }
   {
     // Tool path editor
     QVBoxLayout* layout = new QVBoxLayout();
@@ -153,8 +132,6 @@ ToolPathPlannerWidget::ToolPathPlannerWidget(QWidget* parent,
 void ToolPathPlannerWidget::setVisualizationFrame(const QString& text)
 {
   marker_frame_ = text.toStdString();
-  touch_point_editor_->setMarkerFrame(marker_frame_);
-  verification_point_editor_->setMarkerFrame(marker_frame_);
   tool_path_editor_->setMarkerFrame(marker_frame_);
 }
 
@@ -273,9 +250,6 @@ void ToolPathPlannerWidget::loadSelectedModel()
     ui_->line_edit_model_name->setText(QString::fromStdString(part.name));
     ui_->plain_text_edit_model_description->setPlainText(QString::fromStdString(part.description));
 
-    touch_point_editor_->setPoints(part.touch_points);
-    verification_point_editor_->setPoints(part.verification_points);
-
     setJobTabsEnabled(false, true);
     loadJobsFromDatabase();
   }
@@ -302,36 +276,11 @@ void ToolPathPlannerWidget::saveModel()
     return;
   }
 
-  // Get the touch points and verification points, and make sure there are
-  // at least 3 of each.  (This requirement could probably be relaxed.)
-  using TouchPointMap = std::map<std::string, opp_msgs::TouchPoint>;
-  TouchPointMap touch_points = touch_point_editor_->getPoints();
-  TouchPointMap verification_points = verification_point_editor_->getPoints();
-  if (touch_points.size() < MIN_TOUCH_POINTS || verification_points.size() < MIN_VERIFICATION_POINTS)
-  {
-    QWarningBox("Ensure at least 3 touch points and 3 verification points have been defined");
-    return;
-  }
-
   // Fill out the part struct with input information
   opp_msgs::Part part;
   part.name = model_name;
   part.description = model_description;
   part.mesh_resource = mesh_resource_;
-
-  // Copy the touch points
-  part.touch_points.reserve(touch_points.size());
-  for (const std::pair<const std::string, opp_msgs::TouchPoint>& pair : touch_points)
-  {
-    part.touch_points.push_back(pair.second);
-  }
-
-  // Copy the verification points
-  part.verification_points.reserve(verification_points.size());
-  for (const std::pair<const std::string, opp_msgs::TouchPoint>& pair : verification_points)
-  {
-    part.verification_points.push_back(pair.second);
-  }
 
   // Save the model to the database
   std::string error_msg;
@@ -513,9 +462,6 @@ void ToolPathPlannerWidget::showPartFromDatabase()
   ui_->line_edit_model_name->setText(QString::fromStdString(part.name));
   ui_->plain_text_edit_model_description->setPlainText(QString::fromStdString(part.description));
 
-  touch_point_editor_->setPoints(part.touch_points);
-  verification_point_editor_->setPoints(part.verification_points);
-
   setJobTabsEnabled(false, true);
   loadJobsFromDatabase();
 }
@@ -585,8 +531,6 @@ void ToolPathPlannerWidget::refresh()
 void ToolPathPlannerWidget::clear()
 {
   // Clear the data in the list editor widgets
-  touch_point_editor_->clear();
-  verification_point_editor_->clear();
   tool_path_editor_->clear();
 
   // Clear the text input data about the model
@@ -638,8 +582,6 @@ void ToolPathPlannerWidget::setModelTabsEnabled(bool enabled)
     ui_->tool_box_model_editor->setItemEnabled(i, enabled);
   }
 
-  ui_->frame_define_touch_off_points->setEnabled(enabled);
-  ui_->frame_define_verification_points->setEnabled(enabled);
 }
 
 void ToolPathPlannerWidget::setJobTabsEnabled(bool enabled, bool first_enabled)

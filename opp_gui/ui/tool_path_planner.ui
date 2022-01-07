@@ -34,7 +34,7 @@
    <item>
     <widget class="QTabWidget" name="tab_widget_main">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_add_part">
       <attribute name="title">
@@ -56,7 +56,7 @@ Use the GUI to define the properties of a new part or modify those of an existin
        <item>
         <widget class="QToolBox" name="tool_box_model_editor">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_load_model">
           <property name="geometry">
@@ -64,7 +64,7 @@ Use the GUI to define the properties of a new part or modify those of an existin
             <x>0</x>
             <y>0</y>
             <width>714</width>
-            <height>848</height>
+            <height>879</height>
            </rect>
           </property>
           <attribute name="label">
@@ -164,69 +164,13 @@ Use the GUI to define the properties of a new part or modify those of an existin
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="page_define_model">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>714</width>
-            <height>848</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>2. Define Model Data</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <widget class="QTabWidget" name="tab_widget">
-             <property name="currentIndex">
-              <number>0</number>
-             </property>
-             <widget class="QWidget" name="tab_touch_points">
-              <attribute name="title">
-               <string>Touch Points</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_8">
-               <item>
-                <widget class="QFrame" name="frame_define_touch_off_points">
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-             <widget class="QWidget" name="tab_verification_points">
-              <attribute name="title">
-               <string>Verification Points</string>
-              </attribute>
-              <layout class="QVBoxLayout" name="verticalLayout_7">
-               <item>
-                <widget class="QFrame" name="frame_define_verification_points">
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-          </layout>
-         </widget>
          <widget class="QWidget" name="page_save_model">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>714</width>
-            <height>848</height>
+            <height>879</height>
            </rect>
           </property>
           <attribute name="label">
@@ -291,7 +235,7 @@ Use the GUI to define the properties of a new part or modify those of an existin
        <item>
         <widget class="QToolBox" name="tool_box_job_editor">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page_load_job">
           <property name="geometry">
@@ -389,8 +333,8 @@ Use the GUI to define the properties of a new part or modify those of an existin
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>714</width>
+            <height>905</height>
            </rect>
           </property>
           <attribute name="label">

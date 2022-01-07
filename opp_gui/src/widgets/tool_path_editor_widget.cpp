@@ -94,14 +94,14 @@ void ToolPathEditorWidget::addToolPathData(const std::vector<opp_msgs::ToolPath>
     if (val.params.config.surface_walk_generator.raster_spacing == 0.0)
     {
       val.params.config.type = 0;  // SURFACE_WALK_RASTER_GENERATOR;
-      val.params.config.surface_walk_generator.raster_spacing = 0.2;
+      val.params.config.surface_walk_generator.raster_spacing = 0.1;
       val.params.config.surface_walk_generator.point_spacing = 0.1;
-      val.params.config.surface_walk_generator.min_hole_size = 0.2;
-      val.params.config.surface_walk_generator.min_segment_size = 0.5;
-      val.params.config.surface_walk_generator.intersection_plane_height = 0.05;
+      val.params.config.surface_walk_generator.min_hole_size = 0.25;
+      val.params.config.surface_walk_generator.min_segment_size = 0.1;
+      val.params.config.surface_walk_generator.intersection_plane_height = 0.2;
 
-      val.params.curvature_threshold = 0.050;
-      val.params.min_polygons_per_cluster = 500;
+      val.params.curvature_threshold = 0.600;
+      val.params.min_polygons_per_cluster = 300;
     }
     std::string key_base = "previous_path_";
     std::string key = key_base + std::to_string(i);
@@ -133,13 +133,14 @@ void ToolPathEditorWidget::onAddPressed()
   if (ok && !key.isEmpty())
   {
     opp_msgs::ToolPath val;
-    val.params.config.surface_walk_generator.raster_spacing = 0.2;
+    val.params.config.surface_walk_generator.raster_spacing = 0.1;
     val.params.config.surface_walk_generator.point_spacing = 0.1;
-    val.params.config.surface_walk_generator.min_hole_size = 0.2;
-    val.params.config.surface_walk_generator.min_segment_size = 0.5;
-    val.params.config.surface_walk_generator.intersection_plane_height = 0.05;
-    val.params.curvature_threshold = 0.050;
-    val.params.min_polygons_per_cluster = 500;
+    val.params.config.surface_walk_generator.min_hole_size = 0.25;
+    val.params.config.surface_walk_generator.min_segment_size = 0.1;
+    val.params.config.surface_walk_generator.intersection_plane_height = 0.2;
+
+    val.params.curvature_threshold = 0.600;
+    val.params.min_polygons_per_cluster = 300;
 
     val.process_type.val = opp_msgs::ProcessType::NONE;
 
